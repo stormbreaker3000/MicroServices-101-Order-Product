@@ -1,0 +1,45 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: product-service
+
+  # ------------------------------------------------------------------
+  # H2 In-Memory Database
+  # ------------------------------------------------------------------
+  datasource:
+    url: jdbc:h2:mem:productdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop   # schema is auto-created from entities at startup
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # H2 console available at http://localhost:8081/h2-console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  rabbitmq:
+    # -------------------------------------------------
+    # Replace these placeholders with your CloudAMQP
+    # credentials from: https://www.cloudamqp.com
+    # -------------------------------------------------
+    host: collie.lmq.cloudamqp.com
+    port: 5672
+    username: <CloudAMQP_username>
+    password: <CloudAMQP_password>
+    virtual-host: <CloudAMQP_virtualhost>
+
+logging:
+  level:
+    com.microapp.productservice: DEBUG

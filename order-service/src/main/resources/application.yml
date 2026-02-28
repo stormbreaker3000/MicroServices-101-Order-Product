@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: order-service
+
+  # ------------------------------------------------------------------
+  # H2 In-Memory Database
+  # ------------------------------------------------------------------
+  datasource:
+    url: jdbc:h2:mem:orderdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop   # schema is auto-created from entities at startup
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  # H2 console available at http://localhost:8080/h2-console
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  rabbitmq:
+    # -------------------------------------------------
+    # Replace these placeholders with your CloudAMQP
+    # credentials from: https://www.cloudamqp.com
+    # -------------------------------------------------
+    host: collie.lmq.cloudamqp.com
+    port: 5672
+    username: <CloudAMQP_username>
+    password: <CloudAMQP_password>
+    virtual-host: <CloudAMQP_virtualhost>
+
+# Base URL for the product-service (synchronous REST client)
+product-service:
+  base-url: http://localhost:8081
+
+logging:
+  level:
+    com.microapp.orderservice: DEBUG
